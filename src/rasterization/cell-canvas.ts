@@ -109,12 +109,6 @@ export class CellCanvas extends LitElement {
     `;
   }
 
-
-  //   <text x="0" y="0" style="
-  //     font-size: 20px;
-  //     line-height: 1;
-  // " transform="translate(0, 18)">😳</text>
-
   updated(changed: PropertyValues) {
     if (changed.has('width') || changed.has('height')) {
       this.refreshGrid();
@@ -140,6 +134,10 @@ export class CellCanvas extends LitElement {
     return [Math.floor(p[0] / this.cellSize), Math.floor(p[1] / this.cellSize)]
   }
 
+  pixelCoordsInv(p: Point): Point {
+    return [(p[0] * this.cellSize) + (this.cellSize / 2), (p[1] * this.cellSize) + (this.cellSize / 2)];
+  }
+
   setPixel(x: number, y: number, value: boolean) {
     const i = (this.cols * y) + x;
     const cell = this.cells[i];
@@ -160,7 +158,7 @@ export class CellCanvas extends LitElement {
     return e as T;
   }
 
-  addHandle(id: string, x: number, y: number) {
+  addHandle(id: string, x: number, y: number, xOnly = false, yOnly = false) {
     if (this.handlesGroup) {
       const [cx, cy] = [(x * this.cellSize) + (this.cellSize / 2), (y * this.cellSize) + (this.cellSize / 2)];
       const circle = this.handlesGroup.ownerDocument!.createElementNS(SNS, 'circle');
@@ -194,12 +192,25 @@ export class CellCanvas extends LitElement {
             const point = svg.createSVGPoint();
             point.x = changed[0].clientX;
             point.y = changed[0].clientY;
-            handle.x = point.x;
-            handle.y = point.y;
-            const coords = point.matrixTransform(svg.getScreenCTM()!.inverse());
-            [handle.cx, handle.cy] = [Math.max(0, Math.min(w, coords.x)), Math.max(0, Math.min(h, coords.y))];
-            circle.setAttribute('cx', `${handle.cx}`);
-            circle.setAttribute('cy', `${handle.cy}`);
+            if (xOnly) {
+              handle.x = point.x;
+              const coords = point.matrixTransform(svg.getScreenCTM()!.inverse());
+              handle.cx = Math.max(0, Math.min(w, coords.x));
+              circle.setAttribute('cx', `${handle.cx}`);
+            } else if (yOnly) {
+              handle.y = point.y;
+              const coords = point.matrixTransform(svg.getScreenCTM()!.inverse());
+              handle.cy = Math.max(0, Math.min(w, coords.y));
+              circle.setAttribute('cy', `${handle.cy}`);
+            } else {
+              handle.x = point.x;
+              handle.y = point.y;
+              const coords = point.matrixTransform(svg.getScreenCTM()!.inverse());
+              [handle.cx, handle.cy] = [Math.max(0, Math.min(w, coords.x)), Math.max(0, Math.min(h, coords.y))];
+              circle.setAttribute('cx', `${handle.cx}`);
+              circle.setAttribute('cy', `${handle.cy}`);
+            }
+
             fire();
           }
         }
