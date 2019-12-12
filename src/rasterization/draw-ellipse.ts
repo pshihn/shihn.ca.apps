@@ -223,25 +223,6 @@ export class DrawEllipseCanvas extends LitElement {
     this.drawPoints(bricks);
   }
 
-  // private linePoints(x1: number, y1: number, x2: number, y2: number): Point[] {
-  //   const points: Point[] = [];
-  //   const dy = y2 - y1;
-  //   const dx = x2 - x1;
-  //   const n = Math.max(Math.abs(dx), Math.abs(dy));
-  //   const ninv = n === 0 ? 0 : 1 / n;
-  //   const xStep = dx * ninv;
-  //   const yStep = dy * ninv;
-  //   let x = x1;
-  //   let y = y1;
-  //   points.push([Math.round(x), Math.round(y)]);
-  //   for (let step = 0; step < n; step++) {
-  //     x += xStep;
-  //     y += yStep;
-  //     points.push([Math.round(x), Math.round(y)]);
-  //   }
-  //   return points;
-  // }
-
   private drawPoints(points: Point[]) {
     const c = this.canvas!;
     for (const p of this.points) {

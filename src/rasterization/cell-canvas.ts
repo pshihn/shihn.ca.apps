@@ -158,7 +158,7 @@ export class CellCanvas extends LitElement {
     return e as T;
   }
 
-  addHandle(id: string, x: number, y: number, xOnly = false, yOnly = false) {
+  addHandle(id: string, x: number, y: number, xOnly = false, yOnly = false): SVGCircleElement | null {
     if (this.handlesGroup) {
       const [cx, cy] = [(x * this.cellSize) + (this.cellSize / 2), (y * this.cellSize) + (this.cellSize / 2)];
       const circle = this.handlesGroup.ownerDocument!.createElementNS(SNS, 'circle');
@@ -216,6 +216,8 @@ export class CellCanvas extends LitElement {
         }
       });
       (circle as any)._tracker = pt;
+      return circle;
     }
+    return null;
   }
 }
