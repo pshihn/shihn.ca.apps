@@ -121,6 +121,8 @@ export class DrawEllipseCanvas extends LitElement {
       t += dyt;
     };
 
+    const bricks: Point[] = [];
+
     if (this.fill) {
       const rects: Rectangle[] = [];
       let rx = x;
@@ -190,9 +192,15 @@ export class DrawEllipseCanvas extends LitElement {
       rects.sort((a, b) => {
         return a.y - b.y;
       });
-      // rects.forEach((rect) => rectangle(rect.x, rect.y, rect.width, rect.height, ctx, style, true));
+      rects.forEach((rect) => {
+        const { x, y, width, height } = rect;
+        for (let i = 0; i < width; i++) {
+          for (let j = 0; j < height; j++) {
+            bricks.push([x + i, y + j]);
+          }
+        }
+      });
     } else {
-      const bricks: Point[] = [];
       while (y >= 0 && x <= a) {
         bricks.push([xc + x, yc + y]);
         if (x !== 0 || y !== 0) {
@@ -211,9 +219,28 @@ export class DrawEllipseCanvas extends LitElement {
           incy();
         }
       }
-      this.drawPoints(bricks);
     }
+    this.drawPoints(bricks);
   }
+
+  // private linePoints(x1: number, y1: number, x2: number, y2: number): Point[] {
+  //   const points: Point[] = [];
+  //   const dy = y2 - y1;
+  //   const dx = x2 - x1;
+  //   const n = Math.max(Math.abs(dx), Math.abs(dy));
+  //   const ninv = n === 0 ? 0 : 1 / n;
+  //   const xStep = dx * ninv;
+  //   const yStep = dy * ninv;
+  //   let x = x1;
+  //   let y = y1;
+  //   points.push([Math.round(x), Math.round(y)]);
+  //   for (let step = 0; step < n; step++) {
+  //     x += xStep;
+  //     y += yStep;
+  //     points.push([Math.round(x), Math.round(y)]);
+  //   }
+  //   return points;
+  // }
 
   private drawPoints(points: Point[]) {
     const c = this.canvas!;

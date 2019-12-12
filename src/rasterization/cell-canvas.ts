@@ -200,7 +200,7 @@ export class CellCanvas extends LitElement {
             } else if (yOnly) {
               handle.y = point.y;
               const coords = point.matrixTransform(svg.getScreenCTM()!.inverse());
-              handle.cy = Math.max(0, Math.min(w, coords.y));
+              handle.cy = Math.max(0, Math.min(h, coords.y));
               circle.setAttribute('cy', `${handle.cy}`);
             } else {
               handle.x = point.x;
