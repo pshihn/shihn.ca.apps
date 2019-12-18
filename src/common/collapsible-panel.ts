@@ -94,4 +94,8 @@ export class CollapsiblePanel extends LitElement {
     this.collapsed = !this.collapsed;
   }
 
+  firstUpdated() {
+    setTimeout(() => this.style.display = 'block');
+  }
+
 }
