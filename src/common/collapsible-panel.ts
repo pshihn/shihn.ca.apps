@@ -48,6 +48,10 @@ export class CollapsiblePanel extends LitElement {
       }
       label {
         padding-left: 6px;
+        cursor: pointer;
+      }
+      soso-icon {
+        cursor: pointer;
       }
     </style>
     <div id="header" class="horizontal layout center">
