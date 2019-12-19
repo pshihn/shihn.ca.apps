@@ -54,7 +54,7 @@ export class DrawEllipseCanvas extends LitElement {
       <soso-switch @change="${(e: CustomEvent) => this.emojify = e.detail.checked}"></soso-switch>
     </div>
     <cell-canvas .height="${300}" .filler="${this.emojify ? '😀' : ''}" @handle-move="${this.updateCircle}"></cell-canvas>
-    <div id="caption">Move the points to change the ellipse's dimentions</div>
+    <div id="caption">Move the points to change the ellipse's dimensions</div>
     `;
   }
 
