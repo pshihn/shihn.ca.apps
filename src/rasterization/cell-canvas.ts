@@ -131,7 +131,7 @@ export class CellCanvas extends LitElement {
   }
 
   pixelCoords(p: Point): Point {
-    return [Math.floor(p[0] / this.cellSize), Math.floor(p[1] / this.cellSize)]
+    return [Math.floor(p[0] / this.cellSize), Math.floor(p[1] / this.cellSize)];
   }
 
   pixelCoordsInv(p: Point): Point {

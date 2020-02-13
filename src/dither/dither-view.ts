@@ -1,19 +1,23 @@
 import { LitElement, html, TemplateResult, property, customElement, CSSResult, query, PropertyValues } from 'lit-element';
 import { paletteTypeList } from './worker-api';
 import { flex } from 'soso/bin/styles/flex';
-import { remote } from './remote';
+import { RemoteWorker } from './remote';
 
 import 'soso/bin/components/file-button';
+import 'soso/bin/components/checkbox';
 
 @customElement('dither-view')
 export class DitherView extends LitElement {
   @property({ type: String }) src = '';
+  @property({ type: String }) worker = '';
   @property() private processing = true;
 
   @query('select') private select?: HTMLSelectElement;
   @query('canvas') private canvas?: HTMLCanvasElement;
 
+  private remote?: RemoteWorker;
   private objectUrl?: string;
+  private dither = true;
 
   static get styles(): CSSResult {
     return flex;
@@ -65,26 +69,50 @@ export class DitherView extends LitElement {
         color: #4e7ab1;
         font-family: inherit;
       }
+      soso-checkbox {
+        font-size: 15px;
+        font-family: sans-serif;
+        text-transform: capitalize;
+        color: #4e7ab1;
+        letter-spacing: 0.5px;
+        font-weight: 400;
+        --soso-highlight-color: #4e7ab1;
+      }
     </style>
     <canvas class="${this.processing ? 'processing' : ''}" width="300" height="300"></canvas>
-    <div id="controlPanel" class="horizontal layout center">
-      <select @change="${this.refresh}">
-        ${paletteTypeList.map((d) => html`<option value="${d}">${d}</option>`)}
-      </select>
-      <span class="flex"></span>
-      <soso-file-button @file="${this.handleFile}" accept=".jpg, .jpeg, .png">Select image</soso-file-button>
+    <div id="controlPanel">
+      <div class="horizontal layout center">
+        <select @change="${this.refresh}">
+          ${paletteTypeList.map((d) => html`<option value="${d}">${d}</option>`)}
+        </select>
+        <span class="flex"></span>
+        <soso-file-button @file="${this.handleFile}" accept=".jpg, .jpeg, .png">Select image</soso-file-button>
+      </div>
+      <div class="horizontal layout center" style="margin-top: 10px;">
+        <soso-checkbox .checked="${true}" @change="${this.toggleDither}">Dither image</soso-checkbox>
+      </div>
     </div>
     `;
   }
 
   updated(changed: PropertyValues) {
-    if (changed.has('src') && this.src) {
+    let refresh = !!(changed.has('src') && this.src);
+    if (changed.has('worker') && this.worker) {
+      this.remote = new RemoteWorker(this.worker);
+      refresh = true;
+    }
+    if (refresh) {
       this.refresh();
     }
   }
 
+  private toggleDither(e: CustomEvent) {
+    this.dither = e.detail.checked;
+    this.refresh();
+  }
+
   private async refresh() {
-    if (this.select && this.src && this.canvas) {
+    if (this.select && this.src && this.canvas && this.remote) {
       this.processing = true;
 
       const image = await this.loadImage(this.src);
@@ -106,8 +134,7 @@ export class DitherView extends LitElement {
         const ptype = paletteTypeList[this.select.selectedIndex];
 
         const imageData = ctx.getImageData(0, 0, w, h);
-        const worker = await remote();
-        const outData = await worker.process(imageData, ptype, true);
+        const outData = await this.remote.process(imageData, ptype, this.dither);
         ctx.putImageData(outData, 0, 0);
 
         this.processing = false;

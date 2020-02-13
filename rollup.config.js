@@ -23,5 +23,31 @@ export default [
         comments: false
       }
     })]
+  },
+  {
+    input: 'bin/dither/worker.js',
+    output: {
+      file: `${outFolder}/dither-worker.js`,
+      format: 'iife'
+    },
+    onwarn,
+    plugins: [resolve(), terser({
+      output: {
+        comments: false
+      }
+    })]
+  },
+  {
+    input: 'bin/dither/index.js',
+    output: {
+      file: `${outFolder}/dither.js`,
+      format: 'iife'
+    },
+    onwarn,
+    plugins: [resolve(), minifyHTML(), terser({
+      output: {
+        comments: false
+      }
+    })]
   }
 ];
