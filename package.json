@@ -27,6 +27,7 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
+    "cielab-dither": "^0.1.4",
     "lit-element": "^2.2.1",
     "pointer-tracker": "^2.0.3",
     "soso": "github:pshihn/soso"
