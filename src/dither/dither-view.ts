@@ -40,7 +40,7 @@ export class DitherView extends LitElement {
         opacity: 0;
       }
       #controlPanel {
-        padding: 32px 0;
+        padding: 32px 0 0;
         max-width: 300px;
         box-sizing: border-box;
         margin: 0 auto;
