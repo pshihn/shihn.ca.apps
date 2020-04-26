@@ -18,7 +18,7 @@ class DitherWorkerImpl implements DitherWorker {
           break;
       }
       if (dither) {
-        adoptPaletteFloydSteinbergDither(imageData, palette);
+        adoptPaletteFloydSteinbergDither(imageData, palette, 'rgb');
       } else {
         adoptPaletteNoDither(imageData, palette);
       }
