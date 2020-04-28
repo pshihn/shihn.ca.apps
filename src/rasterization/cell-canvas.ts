@@ -92,7 +92,7 @@ export class CellCanvas extends LitElement {
         stroke: rgba(0,0,0,0);
       }
     </style>
-    <svg viewBox="0,0,${this.width},${this.height}" class="${this.filler ? 'emojify' : ''}">
+    <svg viewBox="0,0,520,300" class="${this.filler ? 'emojify' : ''}">
       <g id="grid" transform="translate(0.5, 0.5) scale(${this.cellSize}) translate(0.5, 0.5)">
       ${repeat(this.cells, (d) => `${d.x},${d.y}`, (d) => svg`
         <rect class="${d.filled ? 'filled' : ''}" transform="translate(${d.x},${d.y}) translate(-0.5, -0.5)" width="0.95" height="0.95"></rect>

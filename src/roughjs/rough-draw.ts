@@ -100,6 +100,21 @@ export class RoughDraw extends HTMLElement {
     window.addEventListener('resize', () => this.resize());
     this.resize();
     this.clearShapes();
+    if (this.mode === 'line') {
+      this.data.push([
+        0.2 * this.canvas.width,
+        0.6 * this.canvas.height,
+        0.8 * this.canvas.width,
+        0.5 * this.canvas.height
+      ]);
+    } else {
+      this.data.push([
+        0.5 * this.canvas.width,
+        0.5 * this.canvas.height,
+        0.4 * this.canvas.width,
+        0.3 * this.canvas.height
+      ]);
+    }
 
     const input = this.root.querySelector('input')!;
     input.addEventListener('input', () => {

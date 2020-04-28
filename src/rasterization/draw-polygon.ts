@@ -28,6 +28,7 @@ export class DrawPolygonCanvas extends LitElement {
       }
       .bar {
         padding: 6px 8px;
+        display: none;
       }
       label {
         font-size: 13px;
@@ -48,13 +49,12 @@ export class DrawPolygonCanvas extends LitElement {
         color: #555;
       }
     </style>
-    <div class="bar horizontal layout center">
+    <div class="bar">
       <div class="flex"></div>
       <label>Draw using emoji</label>
       <soso-switch @change="${(e: CustomEvent) => this.emojify = e.detail.checked}"></soso-switch>
     </div>
     <cell-canvas .height="${300}" .filler="${this.emojify ? '😀' : ''}" @handle-move="${this.updateLines}"></cell-canvas>
-    <div id="caption">Move the vertices to change the polygon</div>
     `;
   }
 
