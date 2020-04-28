@@ -49,5 +49,18 @@ export default [
         comments: false
       }
     })]
+  },
+  {
+    input: 'bin/roughjs/rough-algorithms.js',
+    output: {
+      file: `${outFolder}/rough-algorithms.js`,
+      format: 'iife'
+    },
+    onwarn,
+    plugins: [resolve(), minifyHTML(), terser({
+      output: {
+        comments: false
+      }
+    })]
   }
 ];
