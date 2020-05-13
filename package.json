@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf bin && tsc && rollup -c",
+    "build-home": "rollup --config src/home/rollup.config.js",
     "lint": "tslint -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,13 +25,15 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.3.0",
     "tslint": "^5.20.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.2"
   },
   "dependencies": {
     "cielab-dither": "^0.2.0",
+    "idb": "^5.0.3",
     "lit-element": "^2.3.1",
     "pointer-tracker": "^2.3.0",
-    "roughjs": "^4.2.3",
-    "soso": "github:pshihn/soso"
+    "roughjs": "^4.3.1",
+    "soso": "github:pshihn/soso",
+    "stipple": "^0.1.3"
   }
 }
