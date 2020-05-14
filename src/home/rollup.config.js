@@ -9,6 +9,28 @@ function onwarn(warning) {
   console.error(warning.message);
 }
 
+// export default [
+//   {
+//     input: 'bin/home/worker.js',
+//     output: {
+//       file: `${outFolder}/home/worker.js`,
+//       format: 'iife'
+//     },
+//     onwarn,
+//     plugins: [resolve()]
+//   },
+//   {
+//     input: 'bin/home/stipple-factory.js',
+//     output: {
+//       file: `${outFolder}/home/stippling.js`,
+//       format: 'iife',
+//       name: 'Stippling'
+//     },
+//     onwarn,
+//     plugins: [resolve()]
+//   },
+// ];
+
 export default [
   {
     input: 'bin/home/worker.js',
@@ -24,11 +46,11 @@ export default [
     })]
   },
   {
-    input: 'bin/home/stipple-canvas.js',
+    input: 'bin/home/stipple-factory.js',
     output: {
-      file: `${outFolder}/home/stipple-canvas.js`,
+      file: `${outFolder}/home/stippling.js`,
       format: 'iife',
-      name: 'StippleCanvasGL'
+      name: 'Stippling'
     },
     onwarn,
     plugins: [resolve(), terser({

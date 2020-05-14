@@ -31,11 +31,11 @@ precision mediump float;
 void main() {
   vec2 cxy = 2.0 * gl_PointCoord - 1.0;
   float r = dot(cxy, cxy);
-  float alpha = 1.0 - smoothstep(0.1, 1.0, r);
+  float alpha = 1.0 - smoothstep(0.1, 0.5, r);
   if (r > 1.0) {
     discard;
   }
-  gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0) * alpha;
+  gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0) * alpha;
 }
 `;
 
@@ -64,11 +64,11 @@ export class StippleCanvas {
 
   private worker: Worker;
 
-  constructor(canvas: HTMLCanvasElement, workerUrl: string, n = 10000, animationDuration: 1000) {
+  constructor(canvas: HTMLCanvasElement, workerUrl: string, n: number, animationDuration: number) {
     this.canvas = canvas;
     this.animationDuration = animationDuration;
     this.n = n;
-    const gl = canvas.getContext('webgl');
+    const gl = this.canvas.getContext('webgl');
     if (gl === null) {
       throw new Error('Unable to initialize WebGL. Your browser or machine may not support it.');
     }
@@ -123,8 +123,6 @@ export class StippleCanvas {
   }
 
   private tic(time: number) {
-    const t1 = performance.now();
-
     let t = 1;
     if (this.animating) {
       if (!this.animationTimeStart) {
@@ -160,9 +158,6 @@ export class StippleCanvas {
     // Draw!
     gl.drawArrays(gl.POINTS, 0, this.n);
 
-    const delta = performance.now() - t1;
-    console.log(delta);
-
     if (t < 1) {
       this.nextTic();
     } else if (this.animating) {
@@ -191,8 +186,8 @@ export class StippleCanvas {
     }
   }
 
-  async drawImage(url: string) {
-    if (this.currentImage !== url) {
+  async drawImage(url: string, force: boolean) {
+    if (force || (this.currentImage !== url)) {
       this.currentImage = url;
       const imageData = await loadImageData(url);
       if (this.currentImage !== url) {
