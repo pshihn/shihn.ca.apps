@@ -6,6 +6,7 @@
   "scripts": {
     "build": "rm -rf bin && tsc && rollup -c",
     "build-home": "rollup --config src/home/rollup.config.js",
+    "build-resize-canvas": "rollup --config src/resize-rotated/rollup.config.js",
     "lint": "tslint -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

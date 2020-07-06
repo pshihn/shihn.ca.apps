@@ -11,52 +11,14 @@ function onwarn(warning) {
 
 export default [
   {
-    input: 'bin/rasterization/index.js',
+    input: 'bin/resize-rotated/resize-canvas.js',
     output: {
-      file: `${outFolder}/rasterization.js`,
-      format: 'iife'
-    },
-    onwarn,
-    plugins: [resolve(), minifyHTML(), terser({
-      output: {
-        comments: false
-      }
-    })]
-  },
-  {
-    input: 'bin/dither/worker.js',
-    output: {
-      file: `${outFolder}/dither-worker.js`,
-      format: 'iife'
+      file: `${outFolder}/resize-rotated/resize-canvas.js`,
+      format: 'iife',
+      name: 'ResizeCanvas'
     },
     onwarn,
     plugins: [resolve(), terser({
-      output: {
-        comments: false
-      }
-    })]
-  },
-  {
-    input: 'bin/dither/index.js',
-    output: {
-      file: `${outFolder}/dither.js`,
-      format: 'iife'
-    },
-    onwarn,
-    plugins: [resolve(), minifyHTML(), terser({
-      output: {
-        comments: false
-      }
-    })]
-  },
-  {
-    input: 'bin/roughjs/rough-algorithms.js',
-    output: {
-      file: `${outFolder}/rough-algorithms.js`,
-      format: 'iife'
-    },
-    onwarn,
-    plugins: [resolve(), minifyHTML(), terser({
       output: {
         comments: false
       }
